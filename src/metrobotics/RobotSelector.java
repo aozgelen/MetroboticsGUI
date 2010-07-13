@@ -44,7 +44,7 @@ public class RobotSelector extends JPanel implements Scrollable{
 		setBackground(Color.gray);
 		// Toolkit tk = Toolkit.getDefaultToolkit();
 		Width = 110; //110 (int)(tk.getScreenSize().getWidth() * 0.05);
-		Height = 600; //(int)(tk.getScreenSize().getHeight() * 1);
+		Height = 800; //(int)(tk.getScreenSize().getHeight() * 1);
 		//Width -= 10;
 	    Dimension d = new Dimension(Width, Height);
 	    setPreferredSize(d);		

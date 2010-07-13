@@ -22,7 +22,7 @@ public class Title extends JPanel {
 	public Title() {
 		super();
 		//Toolkit tk = Toolkit.getDefaultToolkit();
-		int Width = 400; //(int)(tk.getScreenSize().getWidth() * 0.30);//300);
+		int Width = 340; //(int)(tk.getScreenSize().getWidth() * 0.30);//300);
 		int Height = 100; // (int)(tk.getScreenSize().getHeight() * 0.10);//100);
 	    Dimension d = new Dimension(Width, Height);
 	    setPreferredSize(d);
@@ -38,8 +38,8 @@ public class Title extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(img, 0, 0, 290, 50, this);
+		g.drawImage(img, 10, 0, 290, 50, this);
 		g.setFont(new Font("SansSerif", Font.BOLD, 22));
-		g.drawString("Human Robot Interface", 15, 90);
+		g.drawString("Human Robot Interface", 25, 90);
 	}
 }

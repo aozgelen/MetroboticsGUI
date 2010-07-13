@@ -82,14 +82,14 @@ public class Grid extends JPanel{
     					" Confidence " + x.getConfidence());
     		}
 
-    		at[i] = AffineTransform.getTranslateInstance(x.getGridX(), this.getHeight()-x.getGridY()); //*50);
+    		at[i] = AffineTransform.getTranslateInstance(x.getGridX()*50, (this.getHeight()-x.getGridY())*50); //*50);
     		at[i].rotate(-x.getGridTheta());    //Math.toRadians((-x.getGridTheta())));
-    		rectangles[i] = new Rectangle((int)x.getGridX()*50-40, (int) (this.getHeight()-x.getGridY())-40, 80, 80);
+    		rectangles[i] = new Rectangle((int)x.getGridX()*50-40, (int) (this.getHeight()-x.getGridY())*50-40, 80, 80);
     		//g2.draw(rectangles[i]);
 			g2.drawImage(x.getRobotGridImage(), at[i], this);
 			String name = x.getName() + " x: " + x.getGridX() + " y: " + x.getGridY() + " theta: " + x.getGridTheta() + " confidence: " + x.getConfidence();
 			if(name!=null)
-				g2.drawString(name, (int)x.getGridX() + 20, (int)(this.getHeight()-x.getGridY()) + 30);  //*50;
+				g2.drawString(name, (int)x.getGridX()*50 + 20, (int)(this.getHeight()-x.getGridY())*50 + 30);  //*50;
 			i++;
     	}
 		//doSomething = false;

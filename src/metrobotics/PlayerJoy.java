@@ -23,7 +23,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
 /**
  * @author Pablo Mu–oz - Metrobotics 
  * This class displays the arrows and textfields to send movement commands to the server,
@@ -48,7 +47,6 @@ public class PlayerJoy extends JPanel{
 	public final int STOP = 5;
 	public final int ADVANCED = 6;
 
-	
 	PlayerJoy(JLabel robotInUse, ArrayList<Robot> robots, Grid grid){
 		super();
 		this.robotInUse = robotInUse;

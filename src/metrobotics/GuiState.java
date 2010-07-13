@@ -34,9 +34,9 @@ public class GuiState extends Thread {
 						Gui.setGUIState(GUIConstants.STATE_INIT);
 					break;
 				case GUIConstants.STATE_GUI_WAIT:
-					if(Gui.debug){
-						System.out.println("GUISTATE WAIT");
-					}
+//					if(Gui.debug){
+//						System.out.println("GUISTATE WAIT");
+//					}
 					Gui.serverComm.check4Msg();
 					break;
 			}

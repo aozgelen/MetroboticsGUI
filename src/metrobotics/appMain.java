@@ -12,6 +12,9 @@ import java.util.ArrayList;
  * TODO: Comment all the methods. Pablo.
  */
 public class appMain {
+	// In case we want to directly connect to Player 
+	static String playerServer;
+	static int portAssigned;
 	
 	public static void main(String[] args) throws InterruptedException {
 		ArrayList<Robot> robots = new ArrayList<Robot>();
@@ -36,8 +39,8 @@ public class appMain {
 			
 		}
 		else if(args[2].compareTo("-p") == 0){
-			String playerServer = args[1];
-			int portAssigned = Integer.parseInt(args[2]);
+			playerServer = args[1];
+			portAssigned = Integer.parseInt(args[2]);
 			// Read configuration file (.cfg)
 			robots = readConfigFile(args[3]);
 		}
@@ -60,15 +63,16 @@ public class appMain {
 		ArrayList<Robot> robotList = new ArrayList<Robot>();
 		System.out.println("Sorry, I am working on creating the code to read the configuration from Player");
 		
+		// THIS IS HARD CODED AS A PRESENTATION FOR THE CONFERENCE
 		
 		// File file = new File(fileName);
 		
 		// set of parameters for Aibo1 - Bet
-		//Robot aibo = new Robot.Builder(true).icon(GUIConstants.SID_AIBO).name("Aibo One").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); //.build(); // cameraAiboTek("192.168.2.155", 10011, 0).pos2DandPTZAiboTek("192.168.2.155", 10050, 10052).
+		Robot aibo = new Robot.Builder(true).icon(GUIConstants.SID_AIBO).name("Aibo One").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); //.build(); // cameraAiboTek("192.168.2.155", 10011, 0).pos2DandPTZAiboTek("192.168.2.155", 10050, 10052).
 		
-//		aibo.setGridX(30);
-//		aibo.setGridY(100);
-//		aibo.setGridTheta(90);
+		aibo.setGridX(30);
+		aibo.setGridY(100);
+		aibo.setGridTheta(90);
 		
 		// Aibo 2 - Rachel (160) - Other? (157)
 //		portAssigned++; // = 6666;
@@ -88,7 +92,7 @@ public class appMain {
 //		portAssigned = 6668;
 //		Robot surveyor2 = new Robot.Builder(false).icon(ICON_SURVEYOR).name("Surveyor 15").build(); // playerclient(playerServer, portAssigned).pos2D(0).camera(0).build();
 
-//		robots.add(aibo);
+		robotList.add(aibo);
 		//robots.add(aibo2);
 //		robots.add(surveyor);
 //		robots.add(surveyor2);
