@@ -22,7 +22,7 @@ public class Title extends JPanel {
 	public Title() {
 		super();
 		//Toolkit tk = Toolkit.getDefaultToolkit();
-		int Width = 340; //(int)(tk.getScreenSize().getWidth() * 0.30);//300);
+		int Width = 360; //(int)(tk.getScreenSize().getWidth() * 0.30);//300);
 		int Height = 100; // (int)(tk.getScreenSize().getHeight() * 0.10);//100);
 	    Dimension d = new Dimension(Width, Height);
 	    setPreferredSize(d);

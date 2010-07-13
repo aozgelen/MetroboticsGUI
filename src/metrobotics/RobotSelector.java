@@ -43,7 +43,7 @@ public class RobotSelector extends JPanel implements Scrollable{
 		this.vi = vision;
 		setBackground(Color.gray);
 		// Toolkit tk = Toolkit.getDefaultToolkit();
-		Width = 110; //110 (int)(tk.getScreenSize().getWidth() * 0.05);
+		Width = 130; // 120//110 (int)(tk.getScreenSize().getWidth() * 0.05);
 		Height = 800; //(int)(tk.getScreenSize().getHeight() * 1);
 		//Width -= 10;
 	    Dimension d = new Dimension(Width, Height);
@@ -209,8 +209,8 @@ public class RobotSelector extends JPanel implements Scrollable{
 	    		);
     		}
     		grabButtons[i] = new JButton("Lock");
-    		grabButtons[i].setFont(new Font("SansSerif", Font.BOLD, 8));
-    		grabButtons[i].setPreferredSize(new Dimension(Width/3 - 3, 12));
+    		grabButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9));
+    		grabButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25));  // 3 15
     		grabButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		grabButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
     		grabButtons[i].addActionListener(new ActionListener() {
@@ -233,8 +233,8 @@ public class RobotSelector extends JPanel implements Scrollable{
     		});
     		
     		ungrabButtons[i] = new JButton("Unlock");
-    		ungrabButtons[i].setFont(new Font("SansSerif", Font.BOLD, 8));
-    		ungrabButtons[i].setPreferredSize(new Dimension(Width/3 - 3, 12));
+    		ungrabButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9));
+    		ungrabButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25)); // 3 15
     		ungrabButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		ungrabButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
     		ungrabButtons[i].addActionListener(new ActionListener() {
@@ -255,14 +255,14 @@ public class RobotSelector extends JPanel implements Scrollable{
     		});
     		
     		imageButtons[i] = new JButton("Image");
-    		imageButtons[i].setFont(new Font("SansSerif", Font.BOLD, 8));
-    		imageButtons[i].setPreferredSize(new Dimension(Width/3 - 3, 12));
+    		imageButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9)); // 8
+    		imageButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25)); // 3 15
     		imageButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		imageButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
     		
     		videoButtons[i] = new JButton("Video");
-    		videoButtons[i].setFont(new Font("SansSerif", Font.BOLD, 8));
-    		videoButtons[i].setPreferredSize(new Dimension(Width/3 - 3, 12));
+    		videoButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9));  // 8
+    		videoButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25));  // 3 15
     		videoButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		videoButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
     		

@@ -46,7 +46,8 @@ public class MainFrame extends JFrame{
 		super(title);
 		//Toolkit tk = Toolkit.getDefaultToolkit();
 	    //Dimension d = tk.getScreenSize();
-		Dimension d = new Dimension(1050, 750);
+		Dimension d = new Dimension(1100, 750); //1050
+		this.setResizable(false);
 	    //d.setSize(d.getWidth(), d.getHeight()-50);
 	    setMinimumSize(d);
 	    //setLayout(new FlowLayout()); // For testing purposes
