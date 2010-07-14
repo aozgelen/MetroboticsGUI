@@ -37,6 +37,7 @@ public class Grid extends JPanel{
 	Image [] robotImages;
 	private Rectangle[] rectangles;
 	Graphics2D g2;
+	final int ratioPixelsMeters = 60;
 	Grid(final JLabel robotInUse, final ArrayList<Robot> robots){
 		super();
 		this.robotInUse = robotInUse;
@@ -46,6 +47,7 @@ public class Grid extends JPanel{
 		//Toolkit tk = Toolkit.getDefaultToolkit();
 		int Width = 750; //(int)(tk.getScreenSize().getWidth() * 0.40); //0.80);
 		int Height = 325; //(int)(tk.getScreenSize().getHeight() * 0.30); //60);
+		double ratioPixelsMeters = 60;
 	    Dimension d = new Dimension(Width, Height);
 	    setPreferredSize(d);
 	    setBorder(BorderFactory.createRaisedBevelBorder());
@@ -63,14 +65,26 @@ public class Grid extends JPanel{
         //g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                            // RenderingHints.VALUE_ANTIALIAS_ON);
         
+        
+    	
+        // PAblo is checking the limits for the DEMO
+        g2.setStroke(new BasicStroke((float) 4));
+        g2.setColor(Color.green);
+        g2.drawLine(0, 0, 0, 325);  // 1 because...
+        g2.drawLine(0, 325, 500, 325);
+        g2.drawLine(500, 325, 500, 0);
+        g2.drawLine(500, 0, 0, 0);
+        g2.setStroke(new BasicStroke((float) 0.5));
+        
+        
         g2.setColor(Color.black);
         drawGrid(g2);
-    	
+        
     	int i=0;
     	if(Gui.debug){
     		System.out.println("In Grid. Num of robots " + robots.size());
     	}
-    	rectangles = new Rectangle[robots.size()];
+    	rectangles = new Rectangle[robots.size()]; // This rectangles are used to grab the robot from the map.
     	at = new AffineTransform[robots.size()];
     	for (Robot x : robots){
     		// TODO: 
@@ -82,14 +96,16 @@ public class Grid extends JPanel{
     					" Confidence " + x.getConfidence());
     		}
 
-    		at[i] = AffineTransform.getTranslateInstance(x.getGridX()*50, (this.getHeight()-x.getGridY()*50)); //*50);
+    		at[i] = AffineTransform.getTranslateInstance(x.getGridX()*ratioPixelsMeters, (this.getHeight()-x.getGridY()*ratioPixelsMeters)); //*50);
     		at[i].rotate(-x.getGridTheta());    //Math.toRadians((-x.getGridTheta())));
-    		rectangles[i] = new Rectangle((int)x.getGridX()*50-40, (int) (this.getHeight()-x.getGridY())*50-40, 80, 80);
+    		rectangles[i] = new Rectangle((int)x.getGridX()*ratioPixelsMeters-40, (int) (this.getHeight()-x.getGridY())*ratioPixelsMeters-40, 80, 80);
     		//g2.draw(rectangles[i]);
 			g2.drawImage(x.getRobotGridImage(), at[i], this);
-			String name = x.getName() + " x: " + x.getGridX() + " y: " + x.getGridY() + " theta: " + x.getGridTheta() + " confidence: " + x.getConfidence();
-			if(name!=null)
-				g2.drawString(name, (int)x.getGridX()*50 + 20, (int)(this.getHeight()-x.getGridY())*50 + 30);  //*50;
+			String name = x.getName() + " x: " + x.getGridX()/ratioPixelsMeters + " y: " + x.getGridY()/ratioPixelsMeters + " theta: " + x.getGridTheta() + " confidence: " + x.getConfidence();
+			if(name!=null){
+				System.out.println("Printing coordinates");
+				g2.drawString(name, (int)x.getGridX()*ratioPixelsMeters + 20, (int)(this.getHeight()-(x.getGridY()*ratioPixelsMeters)) + 30);  //*50;
+			}
 			i++;
     	}
 		//doSomething = false;

@@ -6,10 +6,11 @@ package metrobotics;
  *
  */
 public class GuiState extends Thread {
+
 	long time1, time2;
 	boolean checkTime;
 	GuiState(){
-		time2 = System.currentTimeMillis() + 5000;
+		time2 = System.currentTimeMillis() + GUIConstants.STATE_UPDATE_INTERVAL;
 		Gui.setGUIState(GUIConstants.STATE_INIT);
 	}
 	public void run(){
@@ -41,7 +42,7 @@ public class GuiState extends Thread {
 					break;
 			}
 			time1 = System.currentTimeMillis();
-			if(time1  > time2 + 5000)
+			if(time1  > time2 + GUIConstants.STATE_UPDATE_INTERVAL)
 				checkTime = true;
 			if(checkTime){
 				time2 = System.currentTimeMillis(); 
@@ -50,7 +51,7 @@ public class GuiState extends Thread {
 			}
 			
 			try {
-				Thread.sleep(50); // This sleep time should come also from the configuration file. 
+				Thread.sleep(GUIConstants.STATE_UPDATE_SLEEP_TIME); // This sleep time should come also from the configuration file. 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				return;

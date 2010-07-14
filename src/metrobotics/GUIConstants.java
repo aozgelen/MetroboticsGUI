@@ -57,4 +57,10 @@ public interface GUIConstants {
 	public static final String CAPS_RANGER     = "ranger";
 	public static final String CAPS_SONAR      = "sonar";
 	
+
+    // interface timeout/refresh intervals
+    public static final int STATE_UPDATE_INTERVAL = 1000;
+    public static final int STATE_UPDATE_SLEEP_TIME = 50;
+
+
 }
