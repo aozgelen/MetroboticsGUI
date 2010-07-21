@@ -101,7 +101,7 @@ public class Grid extends JPanel{
     		rectangles[i] = new Rectangle((int)x.getGridX()*ratioPixelsMeters-40, (int) (this.getHeight()-x.getGridY())*ratioPixelsMeters-40, 80, 80);
     		//g2.draw(rectangles[i]);
 			g2.drawImage(x.getRobotGridImage(), at[i], this);
-			String name = x.getName() + " x: " + x.getGridX()/ratioPixelsMeters + " y: " + x.getGridY()/ratioPixelsMeters + " theta: " + x.getGridTheta() + " confidence: " + x.getConfidence();
+			String name = x.getName() + " x: " + x.getGridX() + " y: " + x.getGridY() + " theta: " + x.getGridTheta() + " confidence: " + x.getConfidence();
 			if(name!=null){
 				System.out.println("Printing coordinates");
 				g2.drawString(name, (int)x.getGridX()*ratioPixelsMeters + 20, (int)(this.getHeight()-(x.getGridY()*ratioPixelsMeters)) + 30);  //*50;
