@@ -406,4 +406,13 @@ public class Robot {
 		return this.confidence;
 	}
 	
+	public void setPlayerClientAndCamera(String playerIP, int port) {
+		this.playerclient = new PlayerClient(playerIP, port);
+		this.usesPlayer = true;
+		this.hasCamera = true;
+		this.hasCameraAibo = false;
+		this.cam = playerclient.requestInterfaceCamera(0, PlayerConstants.PLAYER_OPEN_MODE); // We are not using indexes.
+		System.out.println("Player Camera Instantiated");
+	}
+	
 }

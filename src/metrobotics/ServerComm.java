@@ -85,6 +85,7 @@ public class ServerComm {
 		}
 		return true;
 	}
+	//pablo is stupid
 	public void check4Msg() {
 		cal = Calendar.getInstance();
 		try {
@@ -101,6 +102,9 @@ public class ServerComm {
 				}
 				else if((messageToken.compareTo("POSE")) ==0){
 					aksPoseProc(msgScan);
+				}
+				else if((messageToken.compareTo("PLAYER")) == 0){
+					askPlayerProc(msgScan);
 				}
 				else {
 					System.out.println("Message Unknown");
@@ -219,6 +223,55 @@ public class ServerComm {
 		}
 		
 	}
+	
+	public void askPlayerProc(Scanner msgScan){
+		if(Gui.debug){
+			System.out.println("askPlayerProc() Processing ASKPLAYER");
+			System.out.println("askPlayerProc() Robot num = " + robots.size());
+		}
+		// TODO: This code is incomplete
+		long []robotsId = new long[robots.size()];
+		int []robotsKey = new int[robots.size()];
+		// boolean [] checkDrop = new boolean[robots.size()];
+		// boolean callIdent = false;
+		int r = 0;
+		for(Robot x : robots){
+			robotsId[r] = x.getUniqueId();
+			robotsKey[r] = x.getRobotKey();
+			r++;
+		}
+		// ASKPLAYER nBots UniqueID and add PlayerClient if it hasn't been added yet.
+		int size = Integer.parseInt(msgScan.next());
+		for(int i=0; i<size; i++){
+			long unique_id = Long.parseLong(msgScan.next());
+			if(Gui.debug){
+				System.out.println("Unique ID: " + unique_id);
+			}
+			String playerIP = msgScan.next();
+			int port = Integer.parseInt(msgScan.next());
+			
+			//int robotInListIndex = -1;
+			int k = 0;
+			// Check if the robot is already the list
+			for(long id : robotsId){
+				if(id == unique_id){
+					if(!robots.get(robotsKey[k]).getHasCamera()){
+						// TODO: Create PlayerClient and request CameraProxy 
+						robots.get(robotsKey[k]).setPlayerClientAndCamera(playerIP, port);
+					}
+				//	robotInListIndex = k;
+				//	break;
+				}
+				k++;
+			}
+			
+			//if(robotInListIndex == -1){
+				//callIdent = true;
+			//}
+			
+		}
+	}
+	
 	
 	public void identProc(Scanner msgScan){
 		long [] robotsId = new long[robots.size()]; 

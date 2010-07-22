@@ -36,6 +36,10 @@ public class RobotSelector extends JPanel implements Scrollable{
 	int Height;
 	//boolean visionThreadStarted = false;
 	
+	private static boolean threadVision;
+	private static boolean threadVisionAibo;
+	
+	
 	RobotSelector(JLabel robotInUse, ArrayList<Robot> robots, VisionDisplay vision){
 		super();
 		this.robotInUse = robotInUse;
@@ -75,8 +79,9 @@ public class RobotSelector extends JPanel implements Scrollable{
     		robotButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
     		if(!Gui.useCentralServer){
 	    		robotButtons[i].addActionListener(new ActionListener() {
-					private boolean threadVision;
-					private boolean threadVisionAibo;
+					//private boolean threadVision;
+					//private boolean threadVisionAibo;
+					
 	
 					public void actionPerformed(ActionEvent e) {
 						// TODO Think about how to use the key in robots hashtable
@@ -85,60 +90,12 @@ public class RobotSelector extends JPanel implements Scrollable{
 	    	        	System.out.println(x.getName() + " " + Robot.getRobotInUse());
 	    	        	jl.setText(x.getName());
 	    	        	
-	    	        	// Start Thread for Vision for this Robot. Kill all the other Threads for Camera.
-	    	        	// TODO: It is missing the implementation of switching between the Segmented and the Raw Camera.
-	    	        	if(x.getHasCamera()){
-	    	        		System.out.println("In Robot Selects gethasCamera");
-	    	        		Robot.setAiboCameraThread(false); // End all AiboCameraThreads
-	    	        		if(threadVisionAibo){
-	    	        			while(cameraAiboThread.isAlive()){
-	        	        			//System.out.println("Old Thread is still alive");
-	        	        		}
-	    	        		}
-	    	        		Robot.setCameraThread(false); // End all other CameraThreads;
-	    	        		if(threadVision){
-	    	        			while(cameraThread.isAlive()){
-	    	        				System.out.println("Waiting for old thread to end");
-	    	        				System.out.println(Robot.getCameraThread());
-	        	        			//System.out.println("Old Thread is still alive");
-	        	        		}
-	    	        		}
-	    	        		Robot.setCameraThread(true);
-	    	        		cameraThread = new CameraThread(x);
-	    	        		cameraThread.start();
-	    	        		System.out.println("Vision Thread started");
-	    	        		threadVision = true;
-	    	        	}
-	    	        	else if(x.getHasCameraAibo()){
-	    	        		if(Gui.debug){
-	    	        			System.out.println("In Switch");
-	    	        		}
-	    	        		// If we have only one port, we shouldn't enter this statement. 
-	    	        		Robot.setAiboCameraThread(false); // End Previous thread; // This inside while below????
-	    	        		// This should be done in a different way. For instance checking that the thread has ended.
-	    	        		if(threadVisionAibo){
-	    	        			while(cameraAiboThread.isAlive()){
-	        	        			//System.out.println("Old Thread is still alive");
-	        	        		}
-	    	        		}
-	    	        		Robot.setCameraThread(false); // End all other CameraThreads;
-	    	        		if(threadVision){
-		    	        		while(cameraThread.isAlive()){
-		    	        			//System.out.println("Old Thread is still alive");
-		    	        		}
-	    	        		}
-	    	        		aiboPortInUse = x.getRawCameraPort();
-	    	        		// This was for switching from Seg to Raw, or Raw to Seg. 
-	    	        		//aiboPortInUse = (aiboPortInUse == x.getRawCameraPort())? x.getSegCameraPort() : x.getRawCameraPort();
-	    	        		//if(aiboPortInUse == 0)aiboPortInUse = x.getRawCameraPort();
-	                        Robot.setAiboCameraThread(true); // So the new Thread can run
-	                        cameraAiboThread = new CameraAiboTekThread(x, aiboPortInUse);
-	    	        		System.out.println("Aibo Vision Thread started " + aiboPortInUse);
-	    	        		cameraAiboThread.start();
-	    	        		threadVisionAibo = true;
-	    	        	}
+	    	        	showVideo(x);
+	    	        	
 	    	        	
 					}
+
+					
 	    	    });
 	    		buttons.add(robotButtons[i]);
     		}
@@ -195,12 +152,24 @@ public class RobotSelector extends JPanel implements Scrollable{
     		imageButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25)); // 3 15
     		imageButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		imageButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
+    		// TODO: This needs to be implemented
     		
     		videoButtons[i] = new JButton("Video");
     		videoButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9));  // 8
     		videoButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25));  // 3 15
     		videoButtons[i].setVerticalTextPosition(AbstractButton.TOP);
     		videoButtons[i].setHorizontalTextPosition(AbstractButton.CENTER);
+    		videoButtons[i].addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				if(x.getHasCamera()){
+    					showVideo(x);
+    				}
+    				else{
+    					Gui.serverComm.writeStream("ASKPLAYER " + x.getUniqueId());
+    					// TODO: What does the GUI should do until we get the IP and port from the server? Pablo
+    				}
+    			}
+    		});
     		
     		// Wire the button with action listener that contains Robot key
     		
@@ -238,6 +207,61 @@ public class RobotSelector extends JPanel implements Scrollable{
 
 	public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2) {
 		return 0;
+	}
+	
+	private void showVideo(Robot x) {
+		// Start Thread for Vision for this Robot. Kill all the other Threads for Camera.
+    	// TODO: It is missing the implementation of switching between the Segmented and the Raw Camera.
+    	if(x.getHasCamera()){
+    		System.out.println("In Robot Selects getHasCamera");
+    		Robot.setAiboCameraThread(false); // End all AiboCameraThreads
+    		if(threadVisionAibo){
+    			while(cameraAiboThread.isAlive()){
+        			//System.out.println("Old Thread is still alive");
+        		}
+    		}
+    		Robot.setCameraThread(false); // End all other CameraThreads;
+    		if(threadVision){
+    			while(cameraThread.isAlive()){
+    				System.out.println("Waiting for old thread to end");
+    				System.out.println(Robot.getCameraThread());
+        			//System.out.println("Old Thread is still alive");
+        		}
+    		}
+    		Robot.setCameraThread(true);
+    		cameraThread = new CameraThread(x);
+    		cameraThread.start();
+    		System.out.println("Vision Thread started");
+    		threadVision = true;
+    	}
+    	else if(x.getHasCameraAibo()){
+    		if(Gui.debug){
+    			System.out.println("In Switch");
+    		}
+    		// If we have only one port, we shouldn't enter this statement. 
+    		Robot.setAiboCameraThread(false); // End Previous thread; // This inside while below????
+    		// This should be done in a different way. For instance checking that the thread has ended.
+    		if(threadVisionAibo){
+    			while(cameraAiboThread.isAlive()){
+        			//System.out.println("Old Thread is still alive");
+        		}
+    		}
+    		Robot.setCameraThread(false); // End all other CameraThreads;
+    		if(threadVision){
+        		while(cameraThread.isAlive()){
+        			//System.out.println("Old Thread is still alive");
+        		}
+    		}
+    		aiboPortInUse = x.getRawCameraPort();
+    		// This was for switching from Seg to Raw, or Raw to Seg. 
+    		//aiboPortInUse = (aiboPortInUse == x.getRawCameraPort())? x.getSegCameraPort() : x.getRawCameraPort();
+    		//if(aiboPortInUse == 0)aiboPortInUse = x.getRawCameraPort();
+            Robot.setAiboCameraThread(true); // So the new Thread can run
+            cameraAiboThread = new CameraAiboTekThread(x, aiboPortInUse);
+    		System.out.println("Aibo Vision Thread started " + aiboPortInUse);
+    		cameraAiboThread.start();
+    		threadVisionAibo = true;
+    	}		
 	}
 
 }
