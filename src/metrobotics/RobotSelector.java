@@ -64,6 +64,7 @@ public class RobotSelector extends JPanel implements Scrollable{
 	    for (final Robot x : robots) {
     		//final Robot x = (Robot)e.nextElement();
     		String name = x.getName();
+    		System.out.println(name);
     		robotIcons[i] = GuiUtils.resizeJP(x.getRobotIcon().getImage(), Width, Width);
     		final JLabel jl = robotInUse;
     		if(name==null){
@@ -137,77 +138,12 @@ public class RobotSelector extends JPanel implements Scrollable{
 	    	        		threadVisionAibo = true;
 	    	        	}
 	    	        	
-	    	        	
-	    	        	
-	    	        	// Old Code
-	//    	        	if(!threadVision && x.getHasCamera()){
-	//    	        		Robot.setAiboCameraThread(false); // End all AiboCameraThreads
-	//    	        		while(cameraAiboThread.isAlive()){
-	//    	        			//System.out.println("Old Thread is still alive");
-	//    	        		}
-	//    	        		cameraThread = new CameraThread(x);
-	//    	        		cameraThread.start();
-	//    	        		System.out.println("Vision Thread started");
-	//    	        		threadVision = true;
-	//    	        	}
-	//    	        	else if(threadVision && x.getHasCamera()){
-	//    	        		Robot.setAiboCameraThread(false); // End all AiboCameraThreads
-	//    	        		while(cameraAiboThread.isAlive()){
-	//    	        			//System.out.println("Old Thread is still alive");
-	//    	        		}
-	//    	        		// end old CameraThread
-	//    	        		// Use Robot.visionThreadStarted
-	//    	        		Robot.setCameraThread(false);
-	//    	        		while(cameraThread.isAlive()){
-	//    	        			//System.out.println("Old Thread is still alive");
-	//    	        		}
-	//    	        		cameraThread = new CameraThread(x);
-	//    	        		cameraThread.start();
-	//    	        	}
-	//    	        	else if(threadVision && x.getHasCameraAibo() && !Robot.getAiboCameraThread()){
-	//    	        		Robot.setAiboCameraThread(true);
-	//    	        		aiboPortInUse = (x.getRawCameraPort()==0)? x.getSegCameraPort(): x.getRawCameraPort();
-	//    	        		if(aiboPortInUse == 0)aiboPortInUse = x.getRawCameraPort();
-	//                        //if(aiboPortInUse == 0)aiboPortInUse = x.getSegCameraPort();
-	//                        cameraAiboThread = new CameraAiboTekThread(x, aiboPortInUse);
-	//    	        		cameraAiboThread.start();
-	//    	        		System.out.println("Aibo Vision Thread started " + aiboPortInUse);
-	//    	        		threadVision = true;
-	//    	        	}
-	//    	        	
-	//    	        	else if(!threadVision && x.getHasCameraAibo() && !Robot.getAiboCameraThread()){
-	//    	        		Robot.setAiboCameraThread(true);
-	//    	        		aiboPortInUse = (x.getRawCameraPort()==0)? x.getSegCameraPort(): x.getRawCameraPort();
-	//    	        		if(aiboPortInUse == 0)aiboPortInUse = x.getRawCameraPort();
-	//                        //if(aiboPortInUse == 0)aiboPortInUse = x.getSegCameraPort();
-	//                        cameraAiboThread = new CameraAiboTekThread(x, aiboPortInUse);
-	//    	        		cameraAiboThread.start();
-	//    	        		System.out.println("Aibo Vision Thread started " + aiboPortInUse);
-	//    	        		threadVision = true;
-	//    	        	}
-	//    	        	
-	//    	        	else if(threadVision && x.getHasCameraAibo() && Robot.getAiboCameraThread()){
-	//    	        		System.out.println("In Switch");
-	//    	        		// If we have only one port, we shouldn't enter this statement. 
-	//    	        		Robot.setAiboCameraThread(false); // End Previous thread; // This inside while below????
-	//    	        		// This should be done in a different way. For instance checking that the thread has ended.
-	//    	        		while(cameraAiboThread.isAlive()){
-	//    	        			//System.out.println("Old Thread is still alive");
-	//    	        		}
-	//    	        		System.out.println("Old Thread should be dead");
-	//    	        		aiboPortInUse = (aiboPortInUse == x.getRawCameraPort())? x.getSegCameraPort() : x.getRawCameraPort();
-	//    	        		if(aiboPortInUse == 0)aiboPortInUse = x.getRawCameraPort();
-	//                        //if(aiboPortInUse == 0)aiboPortInUse = x.getSegCameraPort();
-	//                        Robot.setAiboCameraThread(true); // So the new Thread can run
-	//                        cameraAiboThread = new CameraAiboTekThread(x, aiboPortInUse);
-	//    	        		System.out.println("Aibo Vision Thread started " + aiboPortInUse);
-	//    	        		cameraAiboThread.start();
-	//    	        	}
-	    	        	
-						}
-	    	    	}
-	    		);
+					}
+	    	    });
+	    		buttons.add(robotButtons[i]);
     		}
+
+    		else {
     		grabButtons[i] = new JButton("Lock");
     		grabButtons[i].setFont(new Font("SansSerif", Font.PLAIN, 9));
     		grabButtons[i].setPreferredSize(new Dimension(Width/3 + 15, 25));  // 3 15
@@ -268,45 +204,39 @@ public class RobotSelector extends JPanel implements Scrollable{
     		
     		// Wire the button with action listener that contains Robot key
     		
-    		buttons.add(robotButtons[i]); 
+    		buttons.add(robotButtons[i]);
     		buttons.add(grabButtons[i]);
     		buttons.add(ungrabButtons[i]);
     		buttons.add(imageButtons[i]);
     		buttons.add(videoButtons[i]);
+    		}
+    		
     		i++;
+    		
+    		
         }
 	    add(buttons);
 	    validate();
 	    
 	}
 
-	@Override
 	public Dimension getPreferredScrollableViewportSize() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public int getScrollableBlockIncrement(Rectangle arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public boolean getScrollableTracksViewportHeight() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean getScrollableTracksViewportWidth() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public int getScrollableUnitIncrement(Rectangle arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

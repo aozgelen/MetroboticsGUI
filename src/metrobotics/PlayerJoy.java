@@ -130,37 +130,39 @@ public class PlayerJoy extends JPanel{
 		
 		
 		// Listeners
-		if(Gui.useCentralServer){
+		//if(Gui.useCentralServer){
 			forward.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					sendMove(FORWARD); // Change this 1 to dir
+					sendMove(FORWARD); 
 				}
 			});
 			atras.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					sendMove(BACK); // Change this 1 to dir
+					sendMove(BACK); 
 				}
 			});
 			rotateLeft.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					sendMove(LEFT); // Change this 1 to dir
+					sendMove(LEFT); 
 				}
 			});
 			rotateRight.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					sendMove(RIGHT); // Change this 1 to dir
+					sendMove(RIGHT); 
 				}
 			});
 			stopBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					sendMove(STOP); // Change this 1 to dir
+					sendMove(STOP); 
 				}
 			});
-		}
-		else{
-			forward.addMouseListener(new ForwardButt(robots, grid));
-			// TODO: Add MouseListeners for the rest.
-		}
+		//}
+		
+//		else{
+//			// THis is not in Use. It is meant to be used with the AIBO. 
+//			forward.addMouseListener(new ForwardButt(robots, grid));
+//			// TODO: Add MouseListeners for the rest.
+//		}
 		
 		
 		class PowerSlider extends JPanel{
@@ -312,22 +314,38 @@ public class PlayerJoy extends JPanel{
 	public void sendMove(int dir){
 		if(Robot.getRobotInUse() >= 0){
 			if(dir == FORWARD){
-			Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " + powerBar.getValue()*Robot.powerLevel + " 0 0"  );
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " + powerBar.getValue()*Robot.powerLevel + " 0 0"  );
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(powerBar.getValue()*Robot.powerLevel, 0);
 			}
 			else if(dir == BACK){
-				Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " + -(powerBar.getValue()*Robot.powerLevel) + " 0 0"  );
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " + -(powerBar.getValue()*Robot.powerLevel) + " 0 0"  );
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(-powerBar.getValue()*Robot.powerLevel, 0);
 			}
 			else if(dir == LEFT){
-				Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 " + powerBar.getValue()*Robot.powerLevel*10.0);
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 " + powerBar.getValue()*Robot.powerLevel*10.0);
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(0, powerBar.getValue()*Robot.powerLevel*10);
+
 			}
 			else if(dir == RIGHT){
-				Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 " + -(powerBar.getValue()*Robot.powerLevel*10.0));
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 " + -(powerBar.getValue()*Robot.powerLevel*10.0));
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(0, -powerBar.getValue()*Robot.powerLevel*10);
+
 			}
 			else if(dir == STOP){
-				Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 0");
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " 0 0 0");
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(0, 0);
+
 			}
 			else if(dir == ADVANCED){
-				Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " +  linVelUs.getText() + " 0 " + angVelUs.getText());
+				if(Gui.useCentralServer)
+					Gui.serverComm.writeStream("MOVE " + robots.get(Robot.getRobotInUse()).getUniqueId() + " " +  linVelUs.getText() + " 0 " + angVelUs.getText());
+				robots.get(Robot.getRobotInUse()).p2d.setSpeed(powerBar.getValue()*Robot.powerLevel, 0);
+
 			}
 			
 			

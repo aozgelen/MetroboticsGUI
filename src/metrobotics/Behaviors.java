@@ -52,7 +52,7 @@ public class Behaviors extends JPanel {
 	    squareBehavior.setOpaque(true);
 	    squareBehavior.setBackground(backGBeh);
 	    squareBehavior.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    squareBehavior.addMouseListener(new doSquare(robots));
+	    //squareBehavior.addMouseListener(new doSquare(robots));
 	    add(squareBehavior);
 	    
 	    swarmBehavior = new JLabel("SWARM");
@@ -61,7 +61,7 @@ public class Behaviors extends JPanel {
 	    swarmBehavior.setOpaque(true);
 	    swarmBehavior.setBackground(backGBeh);
 	    swarmBehavior.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    swarmBehavior.addMouseListener(null);
+	    //swarmBehavior.addMouseListener(null);
 	    add(swarmBehavior);
 	    
 	    findObjectBehavior = new JLabel("FIND OBJECT");
@@ -70,7 +70,7 @@ public class Behaviors extends JPanel {
 	    findObjectBehavior.setOpaque(true);
 	    findObjectBehavior.setBackground(backGBeh);
 	    findObjectBehavior.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    findObjectBehavior.addMouseListener(null);
+	    //findObjectBehavior.addMouseListener(null);
 	    add(findObjectBehavior);
 	    
 	    gotoBehavior = new JLabel("GO TO LOCATION");
@@ -79,7 +79,7 @@ public class Behaviors extends JPanel {
 	    gotoBehavior.setOpaque(true);
 	    gotoBehavior.setBackground(backGBeh);
 	    gotoBehavior.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    gotoBehavior.addMouseListener(null);
+	    //gotoBehavior.addMouseListener(null);
 	    add(gotoBehavior);
 
 	    localizeBehavior = new JLabel("LOCALIZE");
@@ -88,7 +88,7 @@ public class Behaviors extends JPanel {
 	    localizeBehavior.setOpaque(true);
 	    localizeBehavior.setBackground(backGBeh);
 	    localizeBehavior.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    localizeBehavior.addMouseListener(null);
+	    //localizeBehavior.addMouseListener(null);
 	    add(localizeBehavior);
 	    
 	    objectRecogNN = new JLabel("OBJECT RECOG. NEURAL NET");
@@ -97,7 +97,7 @@ public class Behaviors extends JPanel {
 	    objectRecogNN.setOpaque(true);
 	    objectRecogNN.setBackground(backGBeh);
 	    objectRecogNN.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-	    objectRecogNN.addMouseListener(null);
+	    //objectRecogNN.addMouseListener(null);
 	    add(objectRecogNN);
 	}
 }

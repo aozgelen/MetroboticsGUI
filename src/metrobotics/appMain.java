@@ -38,7 +38,8 @@ public class appMain {
 			Gui.centralServerInitMsgPort = Integer.parseInt(args[2]); 
 			
 		}
-		else if(args[2].compareTo("-p") == 0){
+		else if(args[0].compareTo("-p") == 0){
+			System.out.println("Connecting directly through Player");
 			playerServer = args[1];
 			portAssigned = Integer.parseInt(args[2]);
 			// Read configuration file (.cfg)
@@ -66,13 +67,13 @@ public class appMain {
 		// THIS IS HARD CODED AS A PRESENTATION FOR THE CONFERENCE
 		
 		// File file = new File(fileName);
-		
+		// portAssigned = 6665;
 		// set of parameters for Aibo1 - Bet
-		Robot aibo = new Robot.Builder(true).icon(GUIConstants.SID_AIBO).name("Aibo One").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); //.build(); // cameraAiboTek("192.168.2.155", 10011, 0).pos2DandPTZAiboTek("192.168.2.155", 10050, 10052).
+		//Robot aibo = new Robot.Builder(true).icon(GUIConstants.SID_AIBO).name("Aibo One").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); //.build(); // cameraAiboTek("192.168.2.155", 10011, 0).pos2DandPTZAiboTek("192.168.2.155", 10050, 10052).
 		
-		aibo.setGridX(30);
-		aibo.setGridY(100);
-		aibo.setGridTheta(90);
+		//aibo.setGridX(30);
+		//aibo.setGridY(100);
+		//aibo.setGridTheta(90);
 		
 		// Aibo 2 - Rachel (160) - Other? (157)
 //		portAssigned++; // = 6666;
@@ -84,18 +85,18 @@ public class appMain {
 		
 		// set of parameters for Surveyor
 //		portAssigned = 6667;
-//		Robot surveyor = new Robot.Builder(true).icon(GUIConstants.SID_SURVEYOR).name("Surveyor 13").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); // build(); //(true).playerclient(playerServer, portAssigned).pos2D(0).camera(0).build();
-//		surveyor.setGridX(260);
-//		surveyor.setGridY(160);
-//		surveyor.setGridTheta(45);
+		Robot surveyor = new Robot.Builder(true).icon(GUIConstants.SID_SURVEYOR).name("Surveyor 13").playerclient(playerServer, portAssigned).pos2D(0).camera(0).build(); // build(); //(true).playerclient(playerServer, portAssigned).pos2D(0).camera(0).build();
+		surveyor.setGridX(260);
+		surveyor.setGridY(160);
+		surveyor.setGridTheta(45);
 				
 //		portAssigned = 6668;
 //		Robot surveyor2 = new Robot.Builder(false).icon(ICON_SURVEYOR).name("Surveyor 15").build(); // playerclient(playerServer, portAssigned).pos2D(0).camera(0).build();
 
-		robotList.add(aibo);
+//		robotList.add(aibo);
 		//robots.add(aibo2);
-//		robots.add(surveyor);
-//		robots.add(surveyor2);
+		robotList.add(surveyor);
+//		robotList.add(surveyor2);
 
 		return robotList;
 	}
